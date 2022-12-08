@@ -17,7 +17,7 @@ class BasketController extends AbstractController
     public function index(BasketRepository $basketRepository): Response
     {
         return $this->render('basket/index.html.twig', [
-            'baskets' => $basketRepository->findAll(),
+            'baskets' => $basketRepository->findByUtilisateur($this->getUser()),
         ]);
     }
 
