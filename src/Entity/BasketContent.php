@@ -8,6 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: BasketContentRepository::class)]
 class BasketContent
 {
@@ -20,6 +23,7 @@ class BasketContent
     private Collection $product;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\PositiveOrZero]
     private ?int $quantity = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
