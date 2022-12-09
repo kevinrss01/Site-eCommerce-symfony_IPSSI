@@ -50,6 +50,6 @@
 				<button class="btn btn-outline-danger">Delete</button>
 			</form>
 		{% endif %}
-		<a class="btn btn-outline-secondary" href="{{ path('app_basket_content_new') }}">Ajouter au panier</a>
+		<a class="btn btn-outline-secondary" href="{{ path('app_basket_content_new', {'product': product.id ,'user': app.user.id})}}">Ajouter au panier</a>
 	</div>
 {% endblock %}

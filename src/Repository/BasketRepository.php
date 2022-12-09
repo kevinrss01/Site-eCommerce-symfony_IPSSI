@@ -47,6 +47,8 @@ class BasketRepository extends ServiceEntityRepository
        return $this->createQueryBuilder('b')
            ->andWhere('b.owner = :val')
            ->setParameter('val', $value)
+           ->andWhere('b.state = :val')
+           ->setParameter('val', false)
            ->orderBy('b.id', 'ASC')
            ->setMaxResults(10)
            ->getQuery()
@@ -54,13 +56,15 @@ class BasketRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?Basket
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByUtilisateur($value): ?Basket
+   {
+       return $this->createQueryBuilder('b')
+       ->andWhere('b.owner = :user')
+       ->setParameter('user', $value)
+       ->andWhere('b.state = :val')
+       ->setParameter('val', false)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

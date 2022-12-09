@@ -9,6 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Produit</th>
                 <th>Quantity</th>
                 <th>Date</th>
                 <th>actions</th>
@@ -18,6 +19,9 @@
         {% for basket_content in basket_contents %}
             <tr>
                 <td>{{ basket_content.id }}</td>
+                {% for product in basket_content.products %}
+                   <td>{{ product.name }}</td> 
+                {% endfor %}
                 <td>{{ basket_content.quantity }}</td>
                 <td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
@@ -32,6 +36,4 @@
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_basket_content_new') }}">Ajouter des produits</a>
 {% endblock %}
