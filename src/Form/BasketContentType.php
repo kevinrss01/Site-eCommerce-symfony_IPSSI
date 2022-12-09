@@ -13,7 +13,6 @@ class BasketContentType extends AbstractType
     {
         $builder
             ->add('quantity')
-            ->add('date')
         ;
     }
 

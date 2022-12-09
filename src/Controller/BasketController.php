@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/basket')]
+#[Route('{_locale}/basket')]
 class BasketController extends AbstractController
 {
     #[Route('/', name: 'app_basket_index', methods: ['GET'])]

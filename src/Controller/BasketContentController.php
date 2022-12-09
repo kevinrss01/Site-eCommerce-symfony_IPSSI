@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/basket/content')]
+#[Route('{_locale}/basket/content')]
 class BasketContentController extends AbstractController
 {
     #[Route('/', name: 'app_basket_content_index', methods: ['GET'])]
@@ -34,9 +34,9 @@ class BasketContentController extends AbstractController
             return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('basket_content/new.html.twig', [
+        return $this->render('basket_content/new.html.twig', [
             'basket_content' => $basketContent,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
