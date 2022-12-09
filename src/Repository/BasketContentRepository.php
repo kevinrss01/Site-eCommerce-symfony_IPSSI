@@ -42,17 +42,17 @@ class BasketContentRepository extends ServiceEntityRepository
 //    /**
 //     * @return BasketContent[] Returns an array of BasketContent objects
 //     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByBasket($value): array
+    {
+        return $this->createQueryBuilder('b')
+            ->andWhere('b.basket = :val')
+            ->setParameter('val', $value)
+            ->orderBy('b.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+   }
 
 //    public function findOneBySomeField($value): ?BasketContent
 //    {

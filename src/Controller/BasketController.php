@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Basket;
 use App\Form\BasketType;
+use App\Repository\BasketContentRepository;
 use App\Repository\BasketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class BasketController extends AbstractController
 {
     #[Route('/', name: 'app_basket_index', methods: ['GET'])]
-    public function index(BasketRepository $basketRepository): Response
+    public function index(BasketRepository $basketRepository, BasketContentRepository $basketContentRepository): Response
     {
         return $this->render('basket/index.html.twig', [
             'baskets' => $basketRepository->findByUtilisateur($this->getUser()),
+            'basket_contents' => $basketContentRepository->findByBasket('basket'),
         ]);
     }
 
