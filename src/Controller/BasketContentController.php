@@ -32,9 +32,8 @@ class BasketContentController extends AbstractController
         $basketContent = new BasketContent();
 
         $basket = $basketRepository->findOneByUtilisateur($user);
-        // dd($basket);
         $basketContent->setBasket($basket);
-        $basketContent->addProduct($product);
+        $basketContent->setProducts($product);
 
         if($product == null){
             return $this->redirectToRoute('app_products_index');
