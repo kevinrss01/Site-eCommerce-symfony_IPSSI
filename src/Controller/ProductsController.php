@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/products')]
+#[Route('{_locale}')]
 class ProductsController extends AbstractController
 {
     #[Route('/', name: 'app_products_index', methods: ['GET'])]
@@ -24,7 +24,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_products_new', methods: ['GET', 'POST'])]
+    #[Route('/product/new', name: 'app_products_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ProductsRepository $productsRepository): Response
     {
         $product = new Products();
@@ -68,7 +68,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_products_show', methods: ['GET'])]
+    #[Route('/product/{id}', name: 'app_products_show', methods: ['GET'])]
     public function show(Products $product): Response
     {
         return $this->render('products/show.html.twig', [
@@ -76,7 +76,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
+    #[Route('/product/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Products $product, ProductsRepository $productsRepository, Filesystem $fs): Response
     {
         $form = $this->createForm(ProductsType::class, $product);
@@ -123,7 +123,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_products_delete', methods: ['POST'])]
+    #[Route('/product/{id}', name: 'app_products_delete', methods: ['POST'])]
     public function delete(Request $request, Products $product, ProductsRepository $productsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
