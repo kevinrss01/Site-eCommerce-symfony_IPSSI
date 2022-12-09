@@ -19,8 +19,6 @@ class BasketContent
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'basketContent', targetEntity: Products::class)]
-    private Collection $product;
 
     #[ORM\Column(nullable: true)]
     #[Assert\PositiveOrZero]
@@ -33,9 +31,13 @@ class BasketContent
     #[ORM\JoinColumn(nullable: false)]
     private ?Basket $basket = null;
 
+    #[ORM\OneToOne(inversedBy: 'basketContent', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Products $product = null;
+
     public function __construct()
     {
-        $this->product = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -46,32 +48,6 @@ class BasketContent
     /**
      * @return Collection<int, Products>
      */
-    public function getProduct(): Collection
-    {
-        return $this->product;
-    }
-
-    public function addProduct(Products $product): self
-    {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-            $product->setBasketContent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Products $product): self
-    {
-        if ($this->product->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getBasketContent() === $this) {
-                $product->setBasketContent(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getQuantity(): ?int
     {
@@ -105,6 +81,18 @@ class BasketContent
     public function setBasket(?Basket $basket): self
     {
         $this->basket = $basket;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Products
+    {
+        return $this->product;
+    }
+
+    public function setProduct(Products $product): self
+    {
+        $this->product = $product;
 
         return $this;
     }
