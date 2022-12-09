@@ -30,11 +30,10 @@ class BasketController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $basketRepository->save($basket, true);
-
             return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('basket/new.html.twig', [
+        return $this->render('basket/new.html.twig', [
             'basket' => $basket,
             'form' => $form,
         ]);
