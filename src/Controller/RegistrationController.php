@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_products_index');
         }
         $user = new User();
-        $user->setRoles(['ROLE_ADMIN']);
+        $user->setRoles(['ROLE_SUPER_ADMIN']);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 

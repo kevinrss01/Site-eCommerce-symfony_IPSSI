@@ -47,7 +47,7 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\ManyToOne(inversedBy: 'product')]
+    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
     private ?BasketContent $basketContent = null;
 
     public function getId(): ?int
@@ -115,13 +115,24 @@ class Products
         return $this;
     }
 
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function getBasketContent(): ?BasketContent
     {
         return $this->basketContent;
     }
 
-    public function setBasketContent(?BasketContent $basketContent): self
+    public function setBasketContent(BasketContent $basketContent): self
     {
+        // set the owning side of the relation if necessary
+        if ($basketContent->getProduct() !== $this) {
+            $basketContent->setProduct($this);
+        }
+
         $this->basketContent = $basketContent;
 
         return $this;
