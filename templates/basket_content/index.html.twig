@@ -1,37 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}BasketContent index{% endblock %}
+{% block title %}BasketContent index
+{% endblock %}
 
 {% block body %}
-    <h1>BasketContent index</h1>
+	<h1>BasketContent index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Quantity</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for basket_content in basket_contents %}
-            <tr>
-                <td>{{ basket_content.id }}</td>
-                <td>{{ basket_content.quantity }}</td>
-                <td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_basket_content_show', {'id': basket_content.id}) }}">Voir</a>
-                    <a href="{{ path('app_basket_content_edit', {'id': basket_content.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Panier vide</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_basket_content_new') }}">Ajouter des produits</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Produit</th>
+				<th>Quantity</th>
+				<th>Date</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for basket_content in basket_contents %}
+				<tr>
+					{{ dump(basket_content) }}
+					<td>{{basket_content.products  }}</td>
+					<td>{{ basket_content.quantity }}</td>
+					<td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
+					<td>
+						<a href="{{ path('app_basket_content_show', {'id': basket_content.id}) }}">Voir</a>
+						<a href="{{ path('app_basket_content_edit', {'id': basket_content.id}) }}">Modifier</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Panier vide</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

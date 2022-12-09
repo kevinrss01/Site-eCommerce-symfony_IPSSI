@@ -2,15 +2,19 @@
 
 namespace App\Controller;
 
+
 use App\Entity\BasketContent;
+use App\Entity\Products;
+use App\Entity\User;
 use App\Form\BasketContentType;
 use App\Repository\BasketContentRepository;
+use App\Repository\BasketRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/basket/content')]
+#[Route('{_locale}/basket/content')]
 class BasketContentController extends AbstractController
 {
     #[Route('/', name: 'app_basket_content_index', methods: ['GET'])]
@@ -21,14 +25,32 @@ class BasketContentController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_basket_content_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BasketContentRepository $basketContentRepository): Response
+    #[Route('/new/{product}/{user}', name: 'app_basket_content_new', methods: ['GET', 'POST'])]
+    public function new(Products $product =null,User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository): Response
     {
+       
         $basketContent = new BasketContent();
+
+        $basket = $basketRepository->findOneByUtilisateur($user);
+        $basketContent->setBasket($basket);
+        $basketContent->setProducts($product);
+
+        if($product == null){
+            return $this->redirectToRoute('app_products_index');
+        }
+
+
+        if($user == null){
+            return $this->redirectToRoute('app_register');
+        }
+        
         $form = $this->createForm(BasketContentType::class, $basketContent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+
+
             $basketContentRepository->save($basketContent, true);
 
             return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
@@ -36,7 +58,7 @@ class BasketContentController extends AbstractController
 
         return $this->render('basket_content/new.html.twig', [
             'basket_content' => $basketContent,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 

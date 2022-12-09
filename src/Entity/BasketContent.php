@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\BasketContentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +37,7 @@ class BasketContent
     public function __construct()
     {
 
+        $this->date = new \DateTime();
     }
 
     public function getId(): ?int
