@@ -7,7 +7,7 @@
     {{ dump(baskets[0].basketContents) }}
 #}
 <h1>Tous les paniers</h1>
-{{ dump(baskets) }}
+{#{{ dump(baskets) }}#}
     <table class="table">
         <thead>
         <tr>
@@ -33,8 +33,8 @@
                 <td>{{ b.owner }}</td>
                 <td>
                     {% for bc in b.basketContents %}
-                        {{ dump(bc) }}
-                        {{ bc.product }}
+                        {#{{ dump(bc) }}#}
+                        {{ bc.products }}
                     {% else %}
                         Aucun produit
                     {% endfor %}
