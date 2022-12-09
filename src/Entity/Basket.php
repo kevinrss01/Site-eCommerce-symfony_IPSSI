@@ -23,6 +23,10 @@ class Basket
     #[ORM\Column]
     private ?bool $state = null;
 
+    public function __construct(){
+        $this->state = false;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
