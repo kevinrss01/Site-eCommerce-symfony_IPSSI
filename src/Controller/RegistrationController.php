@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Basket;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\BasketRepository;
 use App\Security\AuthAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthAuthenticator $authenticator, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthAuthenticator $authenticator, EntityManagerInterface $entityManager, TranslatorInterface $translator , BasketRepository $basketRepository): Response
     {
 
         if ($this->getUser()) {
@@ -42,6 +44,12 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
             // do anything else you need here, like send an email
             $this->addFlash('success', 'Votre compte a bien été créé !🎉');
+            $basket = new Basket();
+            $basket->setOwner($user);
+            $basketRepository->save($basket,true);
+
+
+
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
