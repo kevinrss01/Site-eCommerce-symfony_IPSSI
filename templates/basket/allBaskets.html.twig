@@ -34,13 +34,9 @@
                 <td>
                     {% for bc in b.basketContents %}
                         {{ dump(bc) }}
-                        {% if bc|length == 0 %}
-                            Vide
-                        {% else %}
-                            {{ bc.product }}
-                        {%  endif %}
+                        {{ bc.product }}
                     {% else %}
-                        0
+                        Aucun produit
                     {% endfor %}
                 </td>
                 <td>{{ b.buyDate }}</td>
