@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -47,8 +49,14 @@ class Products
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\OneToOne(mappedBy: 'product', cascade: ['persist', 'remove'])]
-    private ?BasketContent $basketContent = null;
+    #[ORM\OneToMany(mappedBy: 'products', targetEntity: BasketContent::class, orphanRemoval: true)]
+    private Collection $basketContent;
+
+    public function __construct()
+    {
+        $this->basketContent = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -129,11 +137,33 @@ class Products
     public function setBasketContent(BasketContent $basketContent): self
     {
         // set the owning side of the relation if necessary
-        if ($basketContent->getProduct() !== $this) {
-            $basketContent->setProduct($this);
+        if ($basketContent->getProducts() !== $this) {
+            $basketContent->setProducts($this);
         }
 
         $this->basketContent = $basketContent;
+
+        return $this;
+    }
+
+    public function addBasketContent(BasketContent $basketContent): self
+    {
+        if (!$this->basketContent->contains($basketContent)) {
+            $this->basketContent->add($basketContent);
+            $basketContent->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasketContent(BasketContent $basketContent): self
+    {
+        if ($this->basketContent->removeElement($basketContent)) {
+            // set the owning side to null (unless already changed)
+            if ($basketContent->getProducts() === $this) {
+                $basketContent->setProducts(null);
+            }
+        }
 
         return $this;
     }
