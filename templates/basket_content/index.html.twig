@@ -21,17 +21,17 @@
                 <td>{{ basket_content.quantity }}</td>
                 <td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_basket_content_show', {'id': basket_content.id}) }}">show</a>
-                    <a href="{{ path('app_basket_content_edit', {'id': basket_content.id}) }}">edit</a>
+                    <a href="{{ path('app_basket_content_show', {'id': basket_content.id}) }}">Voir</a>
+                    <a href="{{ path('app_basket_content_edit', {'id': basket_content.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Panier vide</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_basket_content_new') }}">Create new</a>
+    <a href="{{ path('app_basket_content_new') }}">Ajouter des produits</a>
 {% endblock %}
