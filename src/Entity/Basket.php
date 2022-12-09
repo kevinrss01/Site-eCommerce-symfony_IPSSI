@@ -17,7 +17,7 @@ class Basket
     #[ORM\ManyToOne(inversedBy: 'baskets')]
     private ?User $owner = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE,  nullable: true)]
     private ?\DateTimeInterface $buyDate = null;
 
     #[ORM\Column]
