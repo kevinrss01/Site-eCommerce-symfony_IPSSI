@@ -76,7 +76,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/product/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
+    #[Route('/product/action/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Products $product, ProductsRepository $productsRepository,Filesystem $fs): Response
     {
         $form = $this->createForm(ProductsType::class, $product);
@@ -123,7 +123,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
-    #[Route('/product/{id}', name: 'app_products_delete', methods: ['POST'])]
+    #[Route('/product/action/{id}', name: 'app_products_delete', methods: ['POST'])]
     public function delete(Request $request, Products $product, ProductsRepository $productsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
