@@ -31,9 +31,9 @@ class BasketContent
     #[ORM\JoinColumn(nullable: false)]
     private ?Basket $basket = null;
 
-    #[ORM\OneToOne(inversedBy: 'basketContent', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'basketContent')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Products $product = null;
+    private ?Products $products = null;
 
     public function __construct()
     {
@@ -85,14 +85,14 @@ class BasketContent
         return $this;
     }
 
-    public function getProduct(): ?Products
+    public function getProducts(): ?Products
     {
-        return $this->product;
+        return $this->products;
     }
 
-    public function setProduct(Products $product): self
+    public function setProducts(?Products $products): self
     {
-        $this->product = $product;
+        $this->products = $products;
 
         return $this;
     }
