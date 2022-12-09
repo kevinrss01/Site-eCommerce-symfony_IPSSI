@@ -29,6 +29,10 @@ class BasketContent
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\ManyToOne(inversedBy: 'basketContents')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Basket $basket = null;
+
     public function __construct()
     {
         $this->product = new ArrayCollection();
@@ -89,6 +93,18 @@ class BasketContent
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getBasket(): ?Basket
+    {
+        return $this->basket;
+    }
+
+    public function setBasket(?Basket $basket): self
+    {
+        $this->basket = $basket;
 
         return $this;
     }

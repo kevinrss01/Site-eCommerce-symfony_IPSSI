@@ -34,7 +34,7 @@ class BasketContentController extends AbstractController
             return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('basket_content/new.html.twig', [
+        return $this->render('basket_content/new.html.twig', [
             'basket_content' => $basketContent,
             'form' => $form,
         ]);

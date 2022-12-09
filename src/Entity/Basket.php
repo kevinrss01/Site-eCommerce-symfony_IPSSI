@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BasketRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,8 +25,12 @@ class Basket
     #[ORM\Column]
     private ?bool $state = null;
 
+    #[ORM\OneToMany(mappedBy: 'basket', targetEntity: BasketContent::class, orphanRemoval: true)]
+    private Collection $basketContents;
+
     public function __construct(){
         $this->state = false;
+        $this->basketContents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -64,6 +70,36 @@ class Basket
     public function setState(bool $state): self
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, BasketContent>
+     */
+    public function getBasketContents(): Collection
+    {
+        return $this->basketContents;
+    }
+
+    public function addBasketContent(BasketContent $basketContent): self
+    {
+        if (!$this->basketContents->contains($basketContent)) {
+            $this->basketContents->add($basketContent);
+            $basketContent->setBasket($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBasketContent(BasketContent $basketContent): self
+    {
+        if ($this->basketContents->removeElement($basketContent)) {
+            // set the owning side to null (unless already changed)
+            if ($basketContent->getBasket() === $this) {
+                $basketContent->setBasket(null);
+            }
+        }
 
         return $this;
     }
