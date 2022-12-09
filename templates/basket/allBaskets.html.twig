@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paniers{% endblock %}
+
+{% block body %}
+{#
+    {{ dump(baskets[0].basketContents) }}
+#}
+<h1>Tous les paniers</h1>
+{{ dump(baskets) }}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>State</th>
+            <th>Utilisateur</th>
+            <th>Contenu</th>
+            <th>Date d'achat</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for b in baskets %}
+            <tr>
+                <td>{{ b.id }}</td>
+                <td>
+                    {% if b.state == null %}
+                        Brouillon
+                    {% else %}
+                        Confirmée
+                    {% endif %}
+                </td>
+                <td>{{ b.owner }}</td>
+                <td>
+                    {% for bc in b.basketContents %}
+                        {{ dump(bc) }}
+                        {% if bc|length == 0 %}
+                            Vide
+                        {% else %}
+                            {{ bc.product }}
+                        {%  endif %}
+                    {% else %}
+                        0
+                    {% endfor %}
+                </td>
+                <td>{{ b.buyDate }}</td>
+                <td>
+                    <a href="">Voir</a>
+                    <a href="">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Panier vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

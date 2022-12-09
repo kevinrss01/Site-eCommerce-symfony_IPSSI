@@ -23,6 +23,16 @@ class BasketController extends AbstractController
         ]);
     }
 
+    #[Route('/allBaskets', name: 'app_all_basket_index', methods: ['GET'])]
+    public function indexAll(BasketRepository $basketRepository): Response
+    {
+        return $this->render('basket/allBaskets.html.twig', [
+            'baskets' => $basketRepository->findAll(),
+        ]);
+    }
+
+
+
     #[Route('/new', name: 'app_basket_new', methods: ['GET', 'POST'])]
     public function new(Request $request, BasketRepository $basketRepository): Response
     {

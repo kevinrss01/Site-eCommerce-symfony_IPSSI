@@ -21,9 +21,16 @@
     <body>
 
     <nav class="navbar navbar-dark bg-dark">
+
         <div class="container-fluid">
             {% if app.user %}
                 <a class="navbar-brand" href="{{ path('app_products_index')}}">Accueil</a>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <div class="actionSuperAdmin">
+                        <a href="{{ path('app_all_basket_index') }}">Tous les paniers</a>
+                       {# <a href="{{  }}">Tous les paniers</a>#}
+                    </div>
+                {% endif %}
                 <div class="navbarRight">
                     <a href="{{ path('app_basket_index') }}"><i class="bi bi-basket"></i></a>
                     <a class="navbar-brand logout" href="{{ path('app_logout')}}">Se déconnecter</a>
