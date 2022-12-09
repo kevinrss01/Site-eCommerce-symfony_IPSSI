@@ -19,6 +19,10 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AuthAuthenticator $authenticator, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_products_index');
+        }
         $user = new User();
         $user->setRoles(['ROLE_ADMIN']);
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -42,8 +46,6 @@ class RegistrationController extends AbstractController
                 $authenticator,
                 $request
             );
-        } else {
-
         }
 
         return $this->render('registration/register.html.twig', [

@@ -1,15 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Products index
-{% endblock %}
+{% block title %}Produits{% endblock %}
 
 {% block body %}
-	<h1>Products index</h1>
+	<h1>Page accueil des produits</h1>
 
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>Name</th>
+				<th>Nom</th>
 				<th>Description</th>
 				<th>Prix</th>
 				<th>Stock</th>
@@ -31,11 +30,12 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="7">no records found</td>
+					<td colspan="7">Aucun produit trouvé.</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-
-	<a href="{{ path('app_products_new') }}" class = "btn btn-outline-primary">Create new</a>
+	{% if is_granted('ROLE_ADMIN') %}
+		<a href="{{ path('app_products_new') }}" class = "btn btn-outline-primary">Créer un nouveau produit</a>
+	{% endif %}
 {% endblock %}
