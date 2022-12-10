@@ -1,6 +1,7 @@
 
 produits:
-    liste: products List
+    liste: Products List
     nom: Name
-    delete: product deleted
-    add: product added
+    delete: Product deleted
+    add: Product added
+    not_found : Product not found

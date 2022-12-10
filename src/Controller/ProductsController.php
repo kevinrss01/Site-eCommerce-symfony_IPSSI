@@ -70,8 +70,13 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'app_products_show', methods: ['GET'])]
-    public function show(Products $product): Response
+    public function show(Products $product = null,TranslatorInterface $translator): Response
     {
+        if($product == null){
+            $this->addFlash('danger', $translator->trans('produits.not_found'));
+            // On retourne une redirection vers la liste des catégories
+            return $this->redirectToRoute('app_products_index');
+        }
         return $this->render('products/show.html.twig', [
             'product' => $product,
         ]);
