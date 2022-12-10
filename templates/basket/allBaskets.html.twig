@@ -15,11 +15,14 @@
             <th>State</th>
             <th>Utilisateur</th>
             <th>Produit</th>
+            <th>Prix total de la commande</th>
         </tr>
         </thead>
         <tbody>
+            {% set sumAmountBasket = 0%}
+            {% set sumAmount = []%}
             {% for b in baskets %}
-                {# Si panier est brouillon il est afficher #}
+                {# Si panier est brouillon il est affiché #}
                 {% if b.state == null %}
                     <tr>
                         <td>{{ b.id }}</td>
@@ -36,16 +39,21 @@
                                 <div>
                                     {#{{ dump(bc) }}#}
                                     <b>{{ bc.quantity}} {{ bc.products }}{{ bc.quantity > 1 ? 's' : ''}}</b><br/>
-                                    - Prix : {{ bc.products.prix }}€<br/>
-                                    - Prix total : {{ bc.products.prix * bc.quantity }}€<br/>
+                                    - Prix unité : {{ bc.products.prix }}€<br/>
+                                    {% set sumOfthisProduct = bc.products.prix * bc.quantity %}
+                                    - Prix total : {{ sumOfthisProduct }}€<br/>
+                                    {% set sumAmount = sumAmount|merge([sumOfthisProduct]) %}
+                                    {% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
                                 </div>
                             {% else %}
                                 Panier vide
                             {% endfor %}
                         </td>
+                        <td>{{ sumAmountBasket }}€</td>
                     </tr>
                 {% endif %}
             {% endfor %}
         </tbody>
     </table>
+
 {% endblock %}
