@@ -54,7 +54,7 @@ class BasketContentController extends AbstractController
 
             $basketContentRepository->save($basketContent, true);
 
-            return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_basket_content_index', array('user'=>$user->getId()), Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('basket_content/new.html.twig', [
@@ -89,13 +89,13 @@ class BasketContentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_basket_content_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_basket_content_delete', methods: ['POST'])]
     public function delete(Request $request, BasketContent $basketContent, BasketContentRepository $basketContentRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$basketContent->getId(), $request->request->get('_token'))) {
             $basketContentRepository->remove($basketContent, true);
         }
 
-        return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_basket_content_index', array('user'=>$this->getUser()->getId()), Response::HTTP_SEE_OTHER);
     }
 }

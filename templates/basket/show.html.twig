@@ -1,30 +1,58 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Basket{% endblock %}
+{% block title %}Commande
+{% endblock %}
 
 {% block body %}
-    <h1>Basket</h1>
+	<h1>Commande</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ basket.id }}</td>
-            </tr>
-            <tr>
-                <th>BuyDate</th>
-                <td>{{ basket.buyDate ? basket.buyDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>State</th>
-                <td>{{ basket.state ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	<table class="table">
+		<table class="table">
+			<tbody>
+				<tr>
+					<th>Id</th>
+					<td>{{ basket.id }}</td>
+				</tr>
+				<tr>
+					<th>Date d'achat</th>
+					<td>{{ basket.buyDate ? basket.buyDate|date('Y-m-d H:i:s') : ''  }}</td>
+				</tr>
+                <tr>
+                <th>Basket Content</th>
+                </tr>
+				<tr>
+					<th>Id</th>
+					<th>Quantité</th>
+					<th>Prix</th>
+					<th>Date</th>
+				</tr>
+				{% set sumAmountBasket = 0%}
+				{% for basket_content in basket.basketContents %}
 
-    <a href="{{ path('app_basket_index') }}">back to list</a>
 
-    <a href="{{ path('app_basket_edit', {'id': basket.id}) }}">edit</a>
+					<tr>
+						<td>{{ basket_content.id }}</td>
+						<td>{{ basket_content.quantity }}</td>
+						<td>{{ basket_content.products.prix}}€</td>
+						{% set sumOfthisProduct = basket_content.products.prix * basket_content.quantity %}
+						<td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
+					</tr>
+					{% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
+				{% else %}
+					<tr>
+						<td colspan="4">Panier vide</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th>Total</th>
+                </tr>
+                <tr>
+					<td>{{sumAmountBasket}}€</td>
+				</tr>
 
-    {{ include('basket/_delete_form.html.twig') }}
-{% endblock %}
+			</tbody>
+		</tr>
+	</tbody>
+</table>
+
+<a href="{{ path('app_user_edit',{'id':app.user.id}) }}"class="btn btn-outline-primary">back to account</a>{% endblock %}

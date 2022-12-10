@@ -45,11 +45,25 @@ class BasketRepository extends ServiceEntityRepository
    public function findByUtilisateur($value): array
    {
        return $this->createQueryBuilder('b')
-           ->andWhere('b.owner = :val')
-           ->setParameter('val', $value)
+           ->andWhere('b.owner = :user')
+           ->setParameter('user', $value)
            ->andWhere('b.state = :val')
            ->setParameter('val', false)
            ->orderBy('b.id', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+   public function findPaidBasketByUtilisateur($value): array
+   {
+       return $this->createQueryBuilder('b')
+           ->andWhere('b.owner = :user')
+           ->setParameter('user', $value)
+           ->andWhere('b.state = :val')
+           ->setParameter('val', 1)
+           ->orderBy('b.buyDate', 'ASC')
            ->setMaxResults(10)
            ->getQuery()
            ->getResult()
