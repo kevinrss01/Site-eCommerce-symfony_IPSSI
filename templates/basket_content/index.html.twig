@@ -5,6 +5,7 @@
 
 {% block body %}
 	<h1>Votre panier</h1>
+	
 
 	<table style="cursor: pointer" class="table table-hover">
 		<thead>
@@ -16,7 +17,10 @@
 			</tr>
 		</thead>
 		<tbody>
+			{% set sumAmountBasket = 0%}
+			{% set idBasket = 0 %}
 			{% for basket_content in basket_contents %}
+			
 				<tr onclick="location.href='{{path('app_basket_content_show', {'id': basket_content.id}) }}'">
 					<td>{{basket_content.products  }}</td>
 					<td>{{ basket_content.quantity }}</td>
@@ -27,6 +31,9 @@
 							<button class="btn btn-outline-danger">Delete</button>
 						</form>
 					</td>
+					{% set idBasket = basket_content.basket.id %}
+					{% set sumOfthisProduct = basket_content.products.prix * basket_content.quantity %}
+					{% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
 				</tr>
 			{% else %}
 				<tr>
@@ -35,7 +42,8 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	<a href="{{ path('app_basket_new')}}" class="btn btn-outline-success">Effectuer l'achat</a>
-	<div>
-
+<div>
+	<p>Total du panier:  {{ sumAmountBasket }}€</p>
+	<a href="{{ path('app_basket_new',{'basket': idBasket})}}" class="btn btn-outline-success">Effectuer l'achat</a>
+</div>
 	{% endblock %}
