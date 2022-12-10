@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte
+{% endblock %}
+
+{% block body %}
+	<h1>Mon compte</h1>
+	{{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+	<table style="cursor: pointer" class="table table-hover">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Montant</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+
+
+			<h2>Historique des commandes</h2>
+			{% for basket in baskets %}
+
+				<tr onclick="location.href='{{path('app_basket_show', {'id': basket.id}) }}'">
+					<td>{{basket.id  }}</td>
+					<td>
+
+						{% set sumAmountBasket = 0%}
+						{% for bc in basket.basketContents %}
+							{% set sumOfthisProduct = bc.products.prix * bc.quantity %}
+							{% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
+						{% endfor %}
+						{{ sumAmountBasket}}€
+					</td>
+					<td>{{basket.buyDate ? basket.buyDate|date('d-m-Y H:i:s')}}</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="4">Pas encore de commande</td>
+				</tr>
+
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}
