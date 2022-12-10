@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Basket;
+use App\Entity\User;
 use App\Form\BasketType;
 use App\Repository\BasketContentRepository;
 use App\Repository\BasketRepository;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,21 +36,19 @@ class BasketController extends AbstractController
 
 
     #[Route('/new', name: 'app_basket_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BasketRepository $basketRepository): Response
+    public function new(Request $request, BasketRepository $basketRepository , Basket $basket = null): Response
     {
-        $basket = new Basket();
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $basketRepository->save($basket, true);
-            return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
+        if($basket == null) {
+            return $this->redirectToRoute('app_basket_content_index');
         }
+        $basket->setBuyDate(new \DateTime());
+        $basket->setState(True);
+        $basketRepository->save($basket, true);
+        $newBasket =new Basket();
+        $newBasket->setOwner($basket->getOwner());
+        $basketRepository->save($newBasket,true);
+        return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
 
-        return $this->render('basket/new.html.twig', [
-            'basket' => $basket,
-            'form' => $form,
-        ]);
     }
 
     #[Route('/{id}', name: 'app_basket_show', methods: ['GET'])]
