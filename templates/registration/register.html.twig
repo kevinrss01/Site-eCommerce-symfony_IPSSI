@@ -22,7 +22,12 @@
             label: 'Mot de passe'
         }) }}
 
-        <button type="submit" class="btn btn-primary">Créer un compte</button>
-        {{ form_end(registrationForm) }}
+        <div style="display: flex; justify-content: space-between">
+            <button type="submit" class="btn btn-primary">Créer un compte</button>
+            {{ form_end(registrationForm) }}
+            <a href="{{ path('app_login') }}" class="btn btn-secondary">Déjà un compte ?</a>
+        </div>
+
+
     </div>
 {% endblock %}
