@@ -20,7 +20,7 @@
 				<tr onclick ="location.href='{{ path('app_products_show', {'id': product.id}) }}'">
 					<td>{{ product.name }}</td>
 					<td>{{ product.description }}</td>
-					<td>{{ product.prix }}</td>
+					<td>{{ product.prix }}€</td>
 					<td>{{ product.stock }}</td>
 					<td>
 						{% if product.photo is not null %}

@@ -26,13 +26,13 @@
             {% if app.user %}
                 <a class="navbar-brand" href="{{ path('app_products_index')}}">Accueil</a>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <div class="actionSuperAdmin">
-                        <a href="{{ path('app_all_basket_index') }}">Tous les paniers</a>
-                       {# <a href="{{  }}">Tous les paniers</a>#}
+                    <div style="display: flex; justify-content: center; align-items: center"class="actionSuperAdmin">
+                        <a style="margin-right: 5px" href="{{ path('app_all_basket_index') }}">Tous les paniers<i style="margin: 3px" class="bi bi-basket3-fill"></i></a>
+                        <a href="{{  path('all_users')}}">Tous les utilisateurs<i style="margin: 3px" class="bi bi-people-fill"></i></a>
                     </div>
                 {% endif %}
                 <div class="navbarRight">
-                    <a href="{{ path('app_basket_index') }}"><i class="bi bi-basket"></i></a>
+                    <a href="{{ path('app_basket_content_index') }}"><i class="bi bi-basket"></i></a>
                     <a class="navbar-brand logout" href="{{ path('app_logout')}}">Se déconnecter</a>
                 </div>
             {% else %}
@@ -52,6 +52,9 @@
             i:hover { color: white}
             .logout {color: grey; font-size: 15px; transition: color 0.2s ease-in}
             .logout:hover {color: white}
+            .actionSuperAdmin a {all: unset; color: grey; cursor: pointer; transition: color 0.2s ease-in}
+            .actionSuperAdmin a:hover {color: white}
+            .actionSuperAdmin a:hover > i{color: white}
         </style>
         {% for type, messages in app.flashes %}
             {% for msg in messages %}
