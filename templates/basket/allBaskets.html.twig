@@ -20,7 +20,6 @@
         </thead>
         <tbody>
             {% set sumAmountBasket = 0%}
-            {% set sumAmount = []%}
             {% for b in baskets %}
                 {# Si panier est brouillon il est affiché #}
                 {% if b.state == null %}
@@ -42,7 +41,6 @@
                                     - Prix unité : {{ bc.products.prix }}€<br/>
                                     {% set sumOfthisProduct = bc.products.prix * bc.quantity %}
                                     - Prix total : {{ sumOfthisProduct }}€<br/>
-                                    {% set sumAmount = sumAmount|merge([sumOfthisProduct]) %}
                                     {% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
                                 </div>
                             {% else %}
