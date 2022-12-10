@@ -1,0 +1,6 @@
+
+produits:
+    liste: products List
+    nom: Name
+    delete: product deleted
+    add: product added

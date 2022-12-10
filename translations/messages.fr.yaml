@@ -1,0 +1,5 @@
+produits:
+    liste: Liste des Produits
+    nom : Nom
+    delete: produit supprimé
+    add : produit ajouté

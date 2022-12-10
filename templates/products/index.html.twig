@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produits{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-	<h1>Page accueil des produits</h1>
+	<h1>{{'produits.liste'|trans}}</h1>
 
 	<table style="cursor: pointer" class="table table-hover">
 		<thead>
 			<tr>
-				<th>Nom</th>
+				<th>{{'produits.nom'|trans}}</th>
 				<th>Description</th>
 				<th>Prix</th>
 				<th>Stock</th>
