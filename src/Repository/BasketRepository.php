@@ -67,4 +67,14 @@ class BasketRepository extends ServiceEntityRepository
            ->getOneOrNullResult()
        ;
    }
+
+   public function findById($value): ?Basket
+   {
+    return $this->createQueryBuilder('b')
+       ->andWhere('b.id = :id')
+       ->setParameter('id', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

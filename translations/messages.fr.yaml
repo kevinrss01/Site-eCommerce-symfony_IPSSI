@@ -1,0 +1,6 @@
+produits:
+    liste: Liste des Produits
+    nom : Nom
+    delete: Produit supprimé
+    add : produit ajouté
+    not_found : Produit introuvable

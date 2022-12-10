@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}')]
 class ProductsController extends AbstractController
@@ -29,7 +30,7 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/product/action/new', name: 'app_products_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProductsRepository $productsRepository): Response
+    public function new(Request $request, ProductsRepository $productsRepository,TranslatorInterface $translator): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
@@ -65,7 +66,7 @@ class ProductsController extends AbstractController
             }
 
             $productsRepository->save($product, true);
-            $this->addFlash('success','Produit ajoutée');
+            $this->addFlash('success',$translator->trans('produits.add'));
 
             return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -77,12 +78,18 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/product/{id}', name: 'app_products_show', methods: ['GET'])]
-    public function show(Products $product): Response
+    public function show(Products $product = null,TranslatorInterface $translator): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
         }
 
+        if($product == null){
+            $this->addFlash('danger', $translator->trans('produits.not_found'));
+            // On retourne une redirection vers la liste des catégories
+            return $this->redirectToRoute('app_products_index');
+        }
+        
         return $this->render('products/show.html.twig', [
             'product' => $product,
         ]);
@@ -140,7 +147,7 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/product/action/{id}', name: 'app_products_delete', methods: ['POST'])]
-    public function delete(Request $request, Products $product, ProductsRepository $productsRepository): Response
+    public function delete(Request $request, Products $product, ProductsRepository $productsRepository, TranslatorInterface $translator): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
@@ -150,6 +157,7 @@ class ProductsController extends AbstractController
             $productsRepository->remove($product, true);
         }
 
+        $this->addFlash('warning',$translator->trans('produits.delete'));
         return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
     }
 }

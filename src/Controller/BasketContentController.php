@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Basket;
 use App\Entity\BasketContent;
 use App\Entity\Products;
 use App\Entity\User;
@@ -17,11 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('{_locale}/basket/content')]
 class BasketContentController extends AbstractController
 {
-    #[Route('/', name: 'app_basket_content_index', methods: ['GET'])]
-    public function index(BasketContentRepository $basketContentRepository): Response
+    #[Route('/{user}', name: 'app_basket_content_index', methods: ['GET'])]
+    public function index(User $user = null,BasketContentRepository $basketContentRepository,BasketRepository $basketRepository): Response
     {
+        $basket = $basketRepository->findOneByUtilisateur($user);
         return $this->render('basket_content/index.html.twig', [
-            'basket_contents' => $basketContentRepository->findAll(),
+            'basket_contents' => $basketContentRepository->findByBasket($basket),
         ]);
     }
 
@@ -62,7 +63,7 @@ class BasketContentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_basket_content_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'app_basket_content_show', methods: ['GET'])]
     public function show(BasketContent $basketContent): Response
     {
         return $this->render('basket_content/show.html.twig', [
@@ -82,9 +83,9 @@ class BasketContentController extends AbstractController
             return $this->redirectToRoute('app_basket_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('basket_content/edit.html.twig', [
+        return $this->render('basket_content/edit.html.twig', [
             'basket_content' => $basketContent,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
