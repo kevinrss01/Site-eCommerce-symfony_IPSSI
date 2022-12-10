@@ -29,9 +29,13 @@
                    value="{{ csrf_token('authenticate') }}"
             >
 
-            <button class="btn btn-lg btn-primary loginBtn" type="submit">
-                Se connecter
-            </button>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+                <button class="btn btn-lg btn-primary loginBtn" type="submit">
+                    Se connecter
+                </button>
+                <a  style="height: 40px; text-align: center" class="btn btn-secondary" href="{{ path('app_register') }}">Pas encore de compte ?</a>
+            </div>
+
         </form>
     </div>
 {% endblock %}

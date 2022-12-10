@@ -1,5 +1,6 @@
 security:
-    access_denied_url: /products
+    #Redirige vers la page accueil si l'accès est interdit
+    access_denied_url: /fr
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -32,8 +33,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/products/action, roles: ROLE_ADMIN }
-        - { path: ^/products/, roles: ROLE_USER }
+        - { path: /superAdmin/, roles: ROLE_SUPER_ADMIN}
+        - { path: /product/action, roles: ROLE_ADMIN }
+        - { path: /basket/action, roles: ROLE_ADMIN }
+
 
 when@test:
     security:

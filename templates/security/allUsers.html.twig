@@ -30,7 +30,11 @@
                         <td>{{ user.email }}</td>
                         <td>
                             {% for role in user.roles %}
-                                {{ role }},
+                                {% if role == 'ROLE_SUPER_ADMIN'%}
+                                    <b>{{ role }},</b>
+                                {% else %}
+                                    {{ role }},
+                                {% endif %}
                             {% endfor %}
                         </td>
                     </tr>
