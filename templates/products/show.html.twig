@@ -12,10 +12,6 @@
 	<table class="table">
 		<tbody>
 			<tr>
-				<th>Id</th>
-				<td>{{ product.id }}</td>
-			</tr>
-			<tr>
 				<th>Name</th>
 				<td>{{ product.name }}</td>
 			</tr>
@@ -50,6 +46,11 @@
 				<button class="btn btn-outline-danger">Delete</button>
 			</form>
 		{% endif %}
+		{% if is_granted('ROLE_USER') %}
+
 		<a class="btn btn-outline-secondary" href="{{ path('app_basket_content_new', {'product': product.id ,'user': app.user.id})}}">Ajouter au panier</a>
+	{% endif %}
+
+		
 	</div>
 {% endblock %}
