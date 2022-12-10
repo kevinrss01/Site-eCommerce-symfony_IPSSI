@@ -2,3 +2,40 @@
 
 {% block title %}Tous les utilisateurs{% endblock %}
 
+{% block body %}
+    <h1>Tous les utilisateurs</h1>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <td><b>Nom</b></td>
+            <td><b>Prénom</b></td>
+            <td><b>Email</b></td>
+            <td><b>Role</b></td>
+        </tr>
+
+        </thead>
+        <tbody>
+            {% if users is empty %}
+                <tr>
+                    <td colspan="4">
+                        Aucun utilisateur
+                    </td>
+                </tr>
+            {% else %}
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.nom}}</td>
+                        <td>{{ user.prenom }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% for role in user.roles %}
+                                {{ role }},
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -14,42 +14,38 @@
             <th>Id</th>
             <th>State</th>
             <th>Utilisateur</th>
-            <th>Contenu</th>
-            <th>Date d'achat</th>
-            <th>Actions</th>
+            <th>Produit</th>
         </tr>
         </thead>
         <tbody>
-        {% for b in baskets %}
-            <tr>
-                <td>{{ b.id }}</td>
-                <td>
-                    {% if b.state == null %}
-                        Brouillon
-                    {% else %}
-                        Confirmée
-                    {% endif %}
-                </td>
-                <td>{{ b.owner }}</td>
-                <td>
-                    {% for bc in b.basketContents %}
-                        {#{{ dump(bc) }}#}
-                        {{ bc.products }}
-                    {% else %}
-                        Aucun produit
-                    {% endfor %}
-                </td>
-                <td>{{ b.buyDate }}</td>
-                <td>
-                    <a href="">Voir</a>
-                    <a href="">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Panier vide</td>
-            </tr>
-        {% endfor %}
+            {% for b in baskets %}
+                {# Si panier est brouillon il est afficher #}
+                {% if b.state == null %}
+                    <tr>
+                        <td>{{ b.id }}</td>
+                        <td>
+                            {% if b.state == null %}
+                                Brouillon
+                            {% else %}
+                                Confirmée
+                            {% endif %}
+                        </td>
+                        <td>{{ b.owner }}</td>
+                        <td>
+                            {% for bc in b.basketContents %}
+                                <div>
+                                    {#{{ dump(bc) }}#}
+                                    <b>{{ bc.quantity}} {{ bc.products }}{{ bc.quantity > 1 ? 's' : ''}}</b><br/>
+                                    - Prix : {{ bc.products.prix }}€<br/>
+                                    - Prix total : {{ bc.products.prix * bc.quantity }}€<br/>
+                                </div>
+                            {% else %}
+                                Panier vide
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}
