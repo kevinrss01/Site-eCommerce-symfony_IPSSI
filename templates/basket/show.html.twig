@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commande
+{% block title %}{{'commande.name'|trans}}
 {% endblock %}
 
 {% block body %}
-	<h1>Commande</h1>
+	<h1>{{'commande.name'|trans}}</h1>
 
 	<table class="table">
 		<table class="table">
@@ -14,16 +14,16 @@
 					<td>{{ basket.id }}</td>
 				</tr>
 				<tr>
-					<th>Date d'achat</th>
-					<td>{{ basket.buyDate ? basket.buyDate|date('Y-m-d H:i:s') : ''  }}</td>
+					<th>{{'commande.date_achat'|trans}}</th>
+					<td>{{ basket.buyDate ? basket.buyDate|date('date.trad'|trans) : ''  }}</td>
 				</tr>
                 <tr>
-                <th>Basket Content</th>
+                <th>{{'commande.basket_cont'|trans}}</th>
                 </tr>
 				<tr>
 					<th>Id</th>
-					<th>Quantité</th>
-					<th>Prix</th>
+					<th>{{'produits.quantity'|trans}}</th>
+					<th>{{'produits.prix'|trans}}</th>
 					<th>Date</th>
 				</tr>
 				{% set sumAmountBasket = 0%}
@@ -35,7 +35,7 @@
 						<td>{{ basket_content.quantity }}</td>
 						<td>{{ basket_content.products.prix}}€</td>
 						{% set sumOfthisProduct = basket_content.products.prix * basket_content.quantity %}
-						<td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
+						<td>{{ basket_content.date ? basket_content.date|date('date.trad'|trans) : '' }}</td>
 					</tr>
 					{% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
 				{% else %}
@@ -55,4 +55,4 @@
 	</tbody>
 </table>
 
-<a href="{{ path('app_user_edit',{'id':app.user.id}) }}"class="btn btn-outline-primary">back to account</a>{% endblock %}
+<a href="{{ path('app_user_edit',{'id':app.user.id}) }}"class="btn btn-outline-primary">{{'bouton.back'|trans}}</a>{% endblock %}

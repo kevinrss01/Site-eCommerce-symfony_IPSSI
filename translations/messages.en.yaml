@@ -8,6 +8,7 @@ produits:
     edit: Edit Product
     delete: Product deleted
     add: Product added
+    add_panier : Product added to basket
     not_found : Product not found
     maj: Product updated
     prix : Price
@@ -15,6 +16,8 @@ produits:
     photo : Picture
     btn_create : Create a new product
     no_product : No products found
+    quantity : Quantity
+    quantity_warn: Quantity greater than available stock
 
 basket:
       add:
@@ -28,3 +31,18 @@ bouton:
     edit: Edit
     back: Back 
     confirmDelete: Are you sure you want to delete this item?
+
+compte:
+    mon_compte: My account
+    not_found: user not found
+
+commande:
+    no_order : No order found
+    name: Order
+    amount : Amount
+    historique : Order history
+    date_achat : Purchase date
+    basket_cont: Basket content
+
+date:
+   trad: Y-m-d H:i:s
