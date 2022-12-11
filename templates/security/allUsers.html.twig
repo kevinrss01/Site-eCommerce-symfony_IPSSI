@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Tous les utilisateurs{% endblock %}
+{% block title %}{{ 'all_user.all_users'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Tous les utilisateurs</h1>
+    <h1>{{ 'all_user.all_users'|trans }}</h1>
     <table class="table">
         <thead>
         <tr>
 
-            <td><b>Nom</b></td>
-            <td><b>Prénom</b></td>
+            <td><b>{{ 'all_user.name'|trans }}</b></td>
+            <td><b>{{ 'all_user.first_name'|trans }}</b></td>
             <td><b>Email</b></td>
             <td><b>Role</b></td>
         </tr>
@@ -19,7 +19,7 @@
             {% if users is empty %}
                 <tr>
                     <td colspan="4">
-                        Aucun utilisateur
+                        {{ 'all_user.no_user'|trans }}
                     </td>
                 </tr>
             {% else %}

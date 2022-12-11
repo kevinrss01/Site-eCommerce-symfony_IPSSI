@@ -1,17 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Panier
-{% endblock %}
+{% block title %}{{ 'basket.your_basket'|trans }}{% endblock %}
 
 {% block body %}
-	<h1>Votre panier</h1>
+	<h1>{{ 'basket.your_basket'|trans }}</h1>
 	
 
 	<table style="cursor: pointer" class="table table-hover">
 		<thead>
 			<tr>
-				<th>Produit</th>
-				<th>Quantity</th>
+				<th>{{ 'produits.produit'|trans }}</th>
+				<th>{{ 'produits.quantity'|trans }}</th>
 				<th>Date</th>
 				<th>actions</th>
 			</tr>
@@ -20,15 +19,14 @@
 			{% set sumAmountBasket = 0%}
 			{% set idBasket = 0 %}
 			{% for basket_content in basket_contents %}
-			
-				<tr onclick="location.href='{{path('app_basket_content_show', {'id': basket_content.id}) }}'">
+				<tr onclick="location.href='{{path('app_products_show', {'id': basket_content.products.id}) }}'">
 					<td>{{basket_content.products  }}</td>
 					<td>{{ basket_content.quantity }}</td>
 					<td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
 					<td>
 						<form method="post" action="{{ path('app_basket_content_delete', {'id': basket_content.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
 							<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ basket_content.id) }}">
-							<button class="btn btn-outline-danger">Delete</button>
+							<button class="btn btn-outline-danger">{{ 'bouton.delete'|trans }}</button>
 						</form>
 					</td>
 					{% set idBasket = basket_content.basket.id %}
@@ -37,13 +35,13 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="4">Panier vide</td>
+					<td colspan="4">{{ 'all_baskets.empty_basket'|trans }}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 <div>
-	<p>Total du panier:  {{ sumAmountBasket }}€</p>
-	<a href="{{ path('app_basket_new',{'basket': idBasket})}}" class="btn btn-outline-success">Effectuer l'achat</a>
+	<p>{{ 'all_baskets.total_price'|trans }}:  <b>{{ sumAmountBasket }}€</b></p>
+	<a href="{{ path('app_basket_new',{'basket': idBasket})}}" class="btn btn-outline-success">{{ 'basket.do_order'|trans }}</a>
 </div>
 	{% endblock %}

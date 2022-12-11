@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}{{ 'register.register_title'|trans }}{% endblock %}
 
 {% block body %}
     <style>
@@ -8,7 +8,7 @@
     </style>
     <div class="pageFormRegisterAndLogin">
 
-        <h1>S'inscrire</h1>
+        <h1>{{ 'register.sign_in'|trans }}</h1>
 
         {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.nom, {
@@ -23,9 +23,9 @@
         }) }}
 
         <div style="display: flex; justify-content: space-between">
-            <button type="submit" class="btn btn-primary">Créer un compte</button>
+            <button type="submit" class="btn btn-primary">{{ 'register.create_account'|trans }}</button>
             {{ form_end(registrationForm) }}
-            <a href="{{ path('app_login') }}" class="btn btn-secondary">Déjà un compte ?</a>
+            <a href="{{ path('app_login') }}" class="btn btn-secondary">{{ 'register.have_account'|trans }}</a>
         </div>
 
 

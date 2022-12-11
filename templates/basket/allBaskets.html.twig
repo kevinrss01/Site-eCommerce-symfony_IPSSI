@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Paniers{% endblock %}
+{% block title %}{{ 'all_baskets.all_baskets'|trans }}{% endblock %}
 
 {% block body %}
 {#
     {{ dump(baskets[0].basketContents) }}
 #}
-<h1>Tous les paniers</h1>
+<h1>{{ 'all_baskets.all_baskets'|trans }}</h1>
 {#{{ dump(baskets) }}#}
     <table class="table">
         <thead>
         <tr>
             <th>Id</th>
-            <th>State</th>
-            <th>Utilisateur</th>
-            <th>Produit</th>
-            <th>Prix total de la commande</th>
+            <th>{{ 'all_baskets.state'|trans }}</th>
+            <th>{{ 'all_baskets.user'|trans }}</th>
+            <th>{{ 'all_baskets.product'|trans }}</th>
+            <th>{{ 'all_baskets.sum_amount'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -27,9 +27,9 @@
                         <td>{{ b.id }}</td>
                         <td>
                             {% if b.state == null %}
-                                Brouillon
+                                {{ 'all_baskets.draft'|trans }}
                             {% else %}
-                                Confirmée
+                                {{ 'all_baskets.valid'|trans }}
                             {% endif %}
                         </td>
                         <td>{{ b.owner }}</td>
@@ -38,13 +38,14 @@
                                 <div>
                                     {#{{ dump(bc) }}#}
                                     <b>{{ bc.quantity}} {{ bc.products }}{{ bc.quantity > 1 ? 's' : ''}}</b><br/>
-                                    - Prix unité : {{ bc.products.prix }}€<br/>
+                                    - {{ 'all_baskets.price unity'|trans }} : {{ bc.products.prix }}€<br/>
                                     {% set sumOfthisProduct = bc.products.prix * bc.quantity %}
-                                    - Prix total : {{ sumOfthisProduct }}€<br/>
+                                    - {{ 'all_baskets.total_price'|trans }} : {{ sumOfthisProduct }}€<br/>
+                                    - {{ 'all_baskets.total_price'|trans }} : {{ sumOfthisProduct }}€<br/>
                                     {% set sumAmountBasket = sumAmountBasket + sumOfthisProduct %}
                                 </div>
                             {% else %}
-                                Panier vide
+                                {{ 'all_baskets.empty_basket'|trans }}
                             {% endfor %}
                         </td>
                         <td>{{ sumAmountBasket }}€</td>
