@@ -9,6 +9,7 @@ use App\Entity\User;
 use App\Form\BasketContentType;
 use App\Repository\BasketContentRepository;
 use App\Repository\BasketRepository;
+use App\Repository\ProductsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BasketContentController extends AbstractController
 {
     #[Route('/{user}', name: 'app_basket_content_index', methods: ['GET'])]
-    public function index(User $user = null,BasketContentRepository $basketContentRepository,BasketRepository $basketRepository): Response
+    public function index(User $user = null, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository): Response
     {
         $basket = $basketRepository->findOneByUtilisateur($user);
         return $this->render('basket_content/index.html.twig', [
@@ -27,34 +28,55 @@ class BasketContentController extends AbstractController
     }
 
     #[Route('/new/{product}/{user}', name: 'app_basket_content_new', methods: ['GET', 'POST'])]
-    public function new(Products $product =null,User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository): Response
+    // function qui crée un nouvelle élément du panier aprés avoir renseigner la quantité voulu
+    public function new(Products $product = null, User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository, ProductsRepository $productRepository): Response
     {
-       
+
         $basketContent = new BasketContent();
 
         $basket = $basketRepository->findOneByUtilisateur($user);
         $basketContent->setBasket($basket);
         $basketContent->setProducts($product);
 
-        if($product == null){
+        if ($product == null) {
             return $this->redirectToRoute('app_products_index');
         }
 
 
-        if($user == null){
+        if ($user == null) {
             return $this->redirectToRoute('app_register');
         }
-        
+
         $form = $this->createForm(BasketContentType::class, $basketContent);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if ($product->getStock() < $form->get('quantity')->getData()) {
 
+                $this->addFlash('warning', 'Quantité supérieur au stock disponible');
+                return $this->redirectToRoute('app_products_index');
+            }
+            $oldBasketContents= $basketContentRepository->findByBasket($basket);
+            foreach ($oldBasketContents as $oldBasketContent) {
+                if ($oldBasketContent->getProducts()->getId() == $basketContent->getProducts()->getId()) {
+                    $quantity = $oldBasketContent->getQuantity() + $basketContent->getQuantity();
+                    $oldBasketContent->setQuantity($quantity);
+                    $product->setStock($product->getStock() - $form->get('quantity')->getData());
 
+                    $productRepository->save($product, true);
+                    $basketContentRepository->save($oldBasketContent, true);
 
+                    $this->addFlash('success', 'Produit ajouté au panier');
+                    return $this->redirectToRoute('app_basket_content_index', array('user' => $user->getId()), Response::HTTP_SEE_OTHER);
+                }
+            }
+
+            $product->setStock($product->getStock() - $form->get('quantity')->getData());
+
+            $productRepository->save($product, true);
             $basketContentRepository->save($basketContent, true);
-
-            return $this->redirectToRoute('app_basket_content_index', array('user'=>$user->getId()), Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Produit ajouté au panier');
+            return $this->redirectToRoute('app_basket_content_index', array('user' => $user->getId()), Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('basket_content/new.html.twig', [
@@ -92,10 +114,10 @@ class BasketContentController extends AbstractController
     #[Route('/delete/{id}', name: 'app_basket_content_delete', methods: ['POST'])]
     public function delete(Request $request, BasketContent $basketContent, BasketContentRepository $basketContentRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$basketContent->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $basketContent->getId(), $request->request->get('_token'))) {
             $basketContentRepository->remove($basketContent, true);
         }
 
-        return $this->redirectToRoute('app_basket_content_index', array('user'=>$this->getUser()->getId()), Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_basket_content_index', array('user' => $this->getUser()->getId()), Response::HTTP_SEE_OTHER);
     }
 }

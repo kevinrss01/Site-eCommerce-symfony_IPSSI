@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}{{'home'|trans}}{% endblock %}
 
 {% block body %}
 	<h1>{{'produits.liste'|trans}}</h1>
@@ -10,9 +10,9 @@
 			<tr>
 				<th>{{'produits.nom'|trans}}</th>
 				<th>Description</th>
-				<th>Prix</th>
-				<th>Stock</th>
-				<th>Photo</th>
+				<th>{{'produits.prix'|trans}}</th>
+				<th>{{'produits.stock'|trans}}</th>
+				<th>{{'produits.photo'|trans}}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -30,12 +30,12 @@
 				</tr>
 			{% else %}
 				<tr>
-					<td colspan="7">Aucun produit trouvé.</td>
+					<td colspan="7">{{'produits.no_product'|trans}}</td>
 				</tr>
 			{% endfor %}
 		</tbody>
 	</table>
 	{% if is_granted('ROLE_ADMIN') %}
-		<a href="{{ path('app_products_new') }}" class = "btn btn-outline-primary">Créer un nouveau produit</a>
+		<a href="{{ path('app_products_new') }}" class = "btn btn-outline-primary">{{'produits.btn_create'|trans}}</a>
 	{% endif %}
 {% endblock %}
