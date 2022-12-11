@@ -45,7 +45,7 @@ class BasketController extends AbstractController
 
 
     #[Route('basket/action/new/{basket}', name: 'app_basket_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BasketRepository $basketRepository, Basket $basket = null): Response
+    public function new(Request $request, BasketRepository $basketRepository, Basket $basket = null,TranslatorInterface $translator): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');

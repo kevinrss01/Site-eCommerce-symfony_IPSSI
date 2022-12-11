@@ -1,6 +1,27 @@
+
+home: Accueil
 produits:
+    produit : Produit
+    edit : Modifier le produit
     liste: Liste des Produits
     nom : Nom
     delete: Produit supprimé
-    add : produit ajouté
+    add : Produit ajouté
     not_found : Produit introuvable
+    maj : Produit mis à jour
+    prix : Prix
+    stock : Quantité disponible
+    photo : Photo
+    btn_create : Créer un nouveau produit
+    no_product : Aucun produit trouvé.
+
+
+
+bouton:
+    update: mettre à jour
+    save: Sauvegarder
+    delete: Supprimer
+    addToBasket: Ajouter au panier
+    edit: Modifier
+    back: Retour
+    confirmDelete : Êtes-vous sûr de vouloir supprimer cet élément ?

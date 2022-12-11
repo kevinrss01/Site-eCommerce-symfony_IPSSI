@@ -96,7 +96,7 @@ class ProductsController extends AbstractController
     }
 
     #[Route('/product/action/{id}/edit', name: 'app_products_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Products $product, ProductsRepository $productsRepository,Filesystem $fs): Response
+    public function edit(Request $request, Products $product, ProductsRepository $productsRepository,Filesystem $fs,TranslatorInterface $translator): Response
     {
         if(!$this->getUser()){
             return $this->redirectToRoute('app_login');
@@ -136,7 +136,7 @@ class ProductsController extends AbstractController
             }
         }
             $productsRepository->save($product, true);
-
+            $this->addFlash('success',$translator->trans('produits.maj'));
             return $this->redirectToRoute('app_products_index', [], Response::HTTP_SEE_OTHER);
         }
 
