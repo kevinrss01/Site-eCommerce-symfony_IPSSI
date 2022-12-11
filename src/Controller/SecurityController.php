@@ -30,14 +30,12 @@ class SecurityController extends AbstractController
     {
         return $this->render('security/allUsers.html.twig',[
             'users' => $userRepository->findAll()
-,        ]);
+        ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {
-        /*$this->addFlash('Danger', 'Vous êtes déconnecté.');
-        $this->redirectToRoute('app_login');*/
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }

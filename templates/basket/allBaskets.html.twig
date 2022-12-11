@@ -36,7 +36,7 @@
                         <td>
                             {% for bc in b.basketContents %}
                                 <div>
-                                    {#{{ dump(bc) }}#}
+                                    {#Ajoute au total du panier chaque total d'un produit#}
                                     <b>{{ bc.quantity}} {{ bc.products }}{{ bc.quantity > 1 ? 's' : ''}}</b><br/>
                                     - {{ 'all_baskets.price unity'|trans }} : {{ bc.products.prix }}€<br/>
                                     {% set sumOfthisProduct = bc.products.prix * bc.quantity %}
