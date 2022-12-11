@@ -34,29 +34,7 @@
     </table>
 
     <a href="{{ path('app_products_index') }}">Ajouter des produits</a>
-    {#<table class="table">
-        <thead>
-            <tr>
-                <th>State</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for basket in baskets %}
-            <tr>
-                <td>{{ basket.state ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_basket_show', {'id': basket.id}) }}">Voir</a>
-                    <a href="{{ path('app_basket_edit', {'id': basket.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">Aucun produit trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>#}
+    <a href="{{ path('app_products_index') }}">Ajouter des produits</a>
 
 
 {% endblock %}

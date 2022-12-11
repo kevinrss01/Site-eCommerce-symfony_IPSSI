@@ -19,10 +19,6 @@ produits:
     quantity : Quantity
     quantity_warn: Quantity greater than available stock
 
-basket:
-      add:
-
-
 bouton:
     update: Update
     save: Save
@@ -83,3 +79,7 @@ commande:
 
 date:
    trad: Y-m-d H:i:s
+
+basket:
+    your_basket: Your basket
+    do_order: Order

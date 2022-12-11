@@ -78,3 +78,10 @@ commande:
 date:
    trad: d-m-Y H:i:s
 
+basket:
+    your_basket: Votre panier
+    do_order: Effectuer l'achat
+
+flash_message:
+    account_created:
+
