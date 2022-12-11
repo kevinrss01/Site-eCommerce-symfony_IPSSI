@@ -7,6 +7,7 @@ produits:
     nom : Nom
     delete: Produit supprimé
     add : Produit ajouté
+    add_panier : Produit ajouté au panier
     not_found : Produit introuvable
     maj : Produit mis à jour
     prix : Prix
@@ -14,6 +15,8 @@ produits:
     photo : Photo
     btn_create : Créer un nouveau produit
     no_product : Aucun produit trouvé.
+    quantity : Quantité
+    quantity_warn: Quantité supérieur au stock disponible
 
 
 
@@ -25,3 +28,18 @@ bouton:
     edit: Modifier
     back: Retour
     confirmDelete : Êtes-vous sûr de vouloir supprimer cet élément ?
+
+compte:
+    mon_compte: Mon compte
+    not_found: utilisateur introuvable
+
+commande:
+    no_order : Aucune commande trouvé
+    name: Commande
+    amount : Montant
+    historique : Historique des commandes
+    date_achat : Date d'achat
+    basket_cont: Contenu du panier
+
+date:
+   trad: d-m-Y H:i:s
