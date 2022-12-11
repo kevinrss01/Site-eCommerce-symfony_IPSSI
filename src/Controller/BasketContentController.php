@@ -14,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('{_locale}/basket/content')]
 class BasketContentController extends AbstractController
@@ -29,7 +30,7 @@ class BasketContentController extends AbstractController
 
     #[Route('/new/{product}/{user}', name: 'app_basket_content_new', methods: ['GET', 'POST'])]
     // function qui crée un nouvelle élément du panier aprés avoir renseigner la quantité voulu
-    public function new(Products $product = null, User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository, ProductsRepository $productRepository): Response
+    public function new(Products $product = null, User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository, ProductsRepository $productRepository,TranslatorInterface $translator): Response
     {
 
         $basketContent = new BasketContent();
@@ -39,11 +40,14 @@ class BasketContentController extends AbstractController
         $basketContent->setProducts($product);
 
         if ($product == null) {
+            $this->addFlash('warning', $translator->trans('produits.not_found'));
             return $this->redirectToRoute('app_products_index');
         }
 
 
         if ($user == null) {
+            
+            $this->addFlash('warning', $translator->trans('compte.not_found'));
             return $this->redirectToRoute('app_register');
         }
 
@@ -53,7 +57,7 @@ class BasketContentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($product->getStock() < $form->get('quantity')->getData()) {
 
-                $this->addFlash('warning', 'Quantité supérieur au stock disponible');
+                $this->addFlash('warning', $translator->trans('produits.quantity_Warn'));
                 return $this->redirectToRoute('app_products_index');
             }
             $oldBasketContents= $basketContentRepository->findByBasket($basket);
@@ -66,7 +70,7 @@ class BasketContentController extends AbstractController
                     $productRepository->save($product, true);
                     $basketContentRepository->save($oldBasketContent, true);
 
-                    $this->addFlash('success', 'Produit ajouté au panier');
+                    $this->addFlash('success', $translator->trans('produits.add_panier'));
                     return $this->redirectToRoute('app_basket_content_index', array('user' => $user->getId()), Response::HTTP_SEE_OTHER);
                 }
             }
@@ -75,7 +79,8 @@ class BasketContentController extends AbstractController
 
             $productRepository->save($product, true);
             $basketContentRepository->save($basketContent, true);
-            $this->addFlash('success', 'Produit ajouté au panier');
+            
+            $this->addFlash('success', $translator->trans('produits.add_panier'));
             return $this->redirectToRoute('app_basket_content_index', array('user' => $user->getId()), Response::HTTP_SEE_OTHER);
         }
 

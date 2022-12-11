@@ -28,7 +28,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->save($user, true);
+<<<<<<< HEAD
             $this->addFlash('success', 'Votre compte a bien été modifié !✅');
+=======
+            $this->addFlash('success', 'Utilisateur mis à jour');
+>>>>>>> c1751935c41430439feb8771e1e15aa3561f745a
             return $this->redirectToRoute('app_user_edit',array('id'=>$user->getId()), Response::HTTP_SEE_OTHER);
         }
 
