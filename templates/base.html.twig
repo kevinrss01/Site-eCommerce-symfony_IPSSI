@@ -26,13 +26,13 @@
             {% if app.user %}
                 <a class="navbar-brand" href="{{ path('app_products_index')}}">{{ 'home'|trans }}</a>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <div style="display: flex; justify-content: center; align-items: center"class="actionSuperAdmin">
+                    <div style="display: flex; justify-content: center; align-items: center" class="actionSuperAdmin">
                         <a style="margin-right: 5px" href="{{ path('app_all_basket_index') }}">{{ 'navbar.all_baskets'|trans }}<i style="margin: 3px" class="bi bi-basket3-fill"></i></a>
                         <a href="{{  path('all_users')}}">{{ 'navbar.all_users'|trans }}<i style="margin: 3px" class="bi bi-people-fill"></i></a>
                     </div>
                 {% endif %}
-                <div class="navbarRight">
-                    <a href="{{ path('app_basket_content_index',{'user': app.user.id}) }}"><i class="bi bi-basket"></i></a>
+                <div style="display: flex" class="navbarRight">
+                        <a href="{{ path('app_basket_content_index',{'user': app.user.id}) }}"><i class="bi bi-basket"></i></a>
                     <a class="navbar-brand logout" href="{{ path('app_user_edit',{'id':app.user.id})}}">{{ 'navbar.my_account'|trans }}</a>
                     <a class="navbar-brand logout" href="{{ path('app_logout')}}">{{ 'navbar.logout'|trans }}</a>
                 </div>
