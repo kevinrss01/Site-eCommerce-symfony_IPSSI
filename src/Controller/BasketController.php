@@ -30,6 +30,7 @@ class BasketController extends AbstractController
         ]);
     }
 
+    //Récupère tous les paniers de tous les utilisateurs et les affiche
     #[Route('/allBaskets', name: 'app_all_basket_index', methods: ['GET'])]
     public function indexAll(BasketRepository $basketRepository): Response
     {
@@ -53,7 +54,7 @@ class BasketController extends AbstractController
         if ($basket == null) {
             return $this->redirectToRoute('app_basket_content_index', array('user' => $userid), Response::HTTP_SEE_OTHER);
         }
-         $basket =$basketRepository->findById($basket);
+        $basket =$basketRepository->findById($basket);
         $basket->setBuyDate(new \DateTime());
         $basket->setState(True);
         $basketRepository->save($basket, true);

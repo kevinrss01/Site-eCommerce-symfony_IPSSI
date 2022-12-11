@@ -29,12 +29,10 @@ class BasketContentController extends AbstractController
     }
 
     #[Route('/new/{product}/{user}', name: 'app_basket_content_new', methods: ['GET', 'POST'])]
-    // function qui crée un nouvelle élément du panier aprés avoir renseigner la quantité voulu
+    // function qui crée un nouvel élément du panier après avoir renseigné la quantité voulu
     public function new(Products $product = null, User $user = null, Request $request, BasketContentRepository $basketContentRepository, BasketRepository $basketRepository, ProductsRepository $productRepository,TranslatorInterface $translator): Response
     {
-
         $basketContent = new BasketContent();
-
         $basket = $basketRepository->findOneByUtilisateur($user);
         $basketContent->setBasket($basket);
         $basketContent->setProducts($product);
@@ -43,8 +41,6 @@ class BasketContentController extends AbstractController
             $this->addFlash('warning', $translator->trans('produits.not_found'));
             return $this->redirectToRoute('app_products_index');
         }
-
-
         if ($user == null) {
             
             $this->addFlash('warning', $translator->trans('compte.not_found'));
@@ -56,7 +52,6 @@ class BasketContentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($product->getStock() < $form->get('quantity')->getData()) {
-
                 $this->addFlash('warning', $translator->trans('produits.quantity_Warn'));
                 return $this->redirectToRoute('app_products_index');
             }
@@ -76,10 +71,8 @@ class BasketContentController extends AbstractController
             }
 
             $product->setStock($product->getStock() - $form->get('quantity')->getData());
-
             $productRepository->save($product, true);
             $basketContentRepository->save($basketContent, true);
-            
             $this->addFlash('success', $translator->trans('produits.add_panier'));
             return $this->redirectToRoute('app_basket_content_index', array('user' => $user->getId()), Response::HTTP_SEE_OTHER);
         }
