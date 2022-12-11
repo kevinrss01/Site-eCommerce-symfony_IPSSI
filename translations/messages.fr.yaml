@@ -40,7 +40,7 @@ register:
     have_account: Déjà un compte ?
 
 navbar:
-    logout: logout
+    logout: Se déconnecter
     my_account: Mon compte
     all_baskets: Tous les paniers
     all_users: Tous les utilisateurs
