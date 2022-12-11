@@ -20,8 +20,7 @@
 			{% set sumAmountBasket = 0%}
 			{% set idBasket = 0 %}
 			{% for basket_content in basket_contents %}
-			
-				<tr onclick="location.href='{{path('app_basket_content_show', {'id': basket_content.id}) }}'">
+				<tr onclick="location.href='{{path('app_products_show', {'id': basket_content.products.id}) }}'">
 					<td>{{basket_content.products  }}</td>
 					<td>{{ basket_content.quantity }}</td>
 					<td>{{ basket_content.date ? basket_content.date|date('Y-m-d H:i:s') : '' }}</td>
@@ -43,7 +42,7 @@
 		</tbody>
 	</table>
 <div>
-	<p>Total du panier:  {{ sumAmountBasket }}€</p>
+	<p>Total du panier:  <b>{{ sumAmountBasket }}€</b></p>
 	<a href="{{ path('app_basket_new',{'basket': idBasket})}}" class="btn btn-outline-success">Effectuer l'achat</a>
 </div>
 	{% endblock %}

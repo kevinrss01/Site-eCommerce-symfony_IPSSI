@@ -28,3 +28,40 @@ bouton:
     edit: Edit
     back: Back 
     confirmDelete: Are you sure you want to delete this item?
+
+login:
+    message1: Please log in
+    password: Password
+    login: Log in
+    no_account: No account?
+
+
+register:
+    register_title: Registration
+    sign_in: Sign in
+    create_account: Create an account
+    have_account: Already registered?
+
+navbar:
+    logout: logout
+    my_account: My account
+    all_baskets: All baskets
+    all_users: All users
+
+all_baskets:
+    all_baskets : All baskets
+    state: state
+    user: user
+    product: product
+    sum_amount: total amount of the order
+    draft: draft
+    valid: valid
+    price unity: price of the unity
+    total_price: total price
+    empty_basket: basket empty
+
+all_user:
+    all_users: All users
+    name: last name
+    first_name: first name
+    no_user: No user found

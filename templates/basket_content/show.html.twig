@@ -3,7 +3,7 @@
 {% block title %}BasketContent{% endblock %}
 
 {% block body %}
-    <h1>BasketContent</h1>
+    <h1>{{ basket_content.products }}</h1>
     <table class="table">
         <tbody>
             <tr>
@@ -11,7 +11,7 @@
                 <td>{{ basket_content.id }}</td>
             </tr>
             <tr>
-                <th>Quantity</th>
+                <th>Quantité</th>
                 <td>{{ basket_content.quantity }}</td>
             </tr>
             <tr>

@@ -15,8 +15,6 @@ produits:
     btn_create : Créer un nouveau produit
     no_product : Aucun produit trouvé.
 
-
-
 bouton:
     update: mettre à jour
     save: Sauvegarder
@@ -25,3 +23,39 @@ bouton:
     edit: Modifier
     back: Retour
     confirmDelete : Êtes-vous sûr de vouloir supprimer cet élément ?
+
+login:
+    message1: Veuillez vous connectez
+    password: Mot de passe
+    login: Se connecter
+    no_account: Pas de compte ?
+
+register:
+    register_title: Inscription
+    sign_in: S'inscrire
+    create_account: Créer un compte
+    have_account: Déjà un compte ?
+
+navbar:
+    logout: logout
+    my_account: Mon compte
+    all_baskets: Tous les paniers
+    all_users: Tous les utilisateurs
+
+all_baskets:
+    all_baskets: Tous les paniers
+    state: État
+    user: Utilisateur
+    product: Produit
+    sum_amount: Prix total de la commande
+    draft: Brouillon
+    valid: Validée
+    price unity: Prix de l'unité
+    total_price: Prix total
+    empty_basket: Panier vide
+
+all_user:
+    all_users: Tous les utilisateurs
+    name: Nom
+    first_name: Prénom
+    no_user: Aucun utilisateur

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{{ 'login.login'|trans }}{% endblock %}
 
 {% block body %}`
     <style>
@@ -19,10 +19,10 @@
                 </div>
             {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Veuillez vous connectez</h1>
+            <h1 class="h3 mb-3 font-weight-normal">{{ 'login.message1'|trans }}</h1>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            <label for="inputPassword">Mot de passe</label>
+            <label for="inputPassword">{{ 'login.password'|trans }}</label>
             <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
             <input type="hidden" name="_csrf_token"
@@ -31,9 +31,9 @@
 
             <div style="display: flex; justify-content: space-between; align-items: center">
                 <button class="btn btn-lg btn-primary loginBtn" type="submit">
-                    Se connecter
+                    {{ 'login.login'|trans }}
                 </button>
-                <a  style="height: 40px; text-align: center" class="btn btn-secondary" href="{{ path('app_register') }}">Pas encore de compte ?</a>
+                <a  style="height: 40px; text-align: center" class="btn btn-secondary" href="{{ path('app_register') }}">{{ 'login.no_account'|trans }}</a>
             </div>
 
         </form>
